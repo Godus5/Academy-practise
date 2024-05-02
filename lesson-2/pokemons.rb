@@ -5,6 +5,7 @@ def pokemons
   number_of_pokemon = gets.chomp.to_i
   if number_of_pokemon.zero?
     puts 'Массив покемонов пуст.'
+    false
   else
     pokemon_array = []
     number_of_pokemon.times do |pokemon_index|
@@ -17,6 +18,7 @@ def pokemons
     end
     puts "\nМассив покемонов:"
     p pokemon_array
+    true
   end
 end
 
