@@ -31,8 +31,3 @@ describe 'Testing methods in the filter by age script' do
     expect(result).to eq([string.split("\n")[0], string.split("\n")[2]])
   end
 end
-
-# read_file
-# set_search_age
-# result
-# search_by_list
