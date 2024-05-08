@@ -21,7 +21,11 @@ def interface
       if File.exist?(TASK_FILE) && !File.zero?(TASK_FILE)
         case mode
         when 1
-          index
+          data_file = index
+          puts "\nСодержимое файла:\n"
+          data_file.each_with_index do |line, idx|
+            puts "#{idx + 1}: #{line}"
+          end
         when 2
           print 'Введите номер искомой строки. Текст приравнивается к 0: '
           id = gets.chomp.to_i
@@ -30,7 +34,12 @@ def interface
             print 'Введите номер искомой строки. Текст приравнивается к 0: '
             id = gets.chomp.to_i
           end
-          find(id)
+          result_find = find(id)
+          if !result_find[1]
+            puts "\nСтроки с введённым номером не существует."
+          else
+            puts "\nСтрока с номером #{id}: #{result_find[0]}"
+          end
         when 3
           print 'Введите паттерн для поиска строки. Пустая строка является некорректным вводом: '
           pattern = gets.chomp
@@ -39,7 +48,13 @@ def interface
             print 'Введите паттерн для поиска строки. Пустая строка является некорректным вводом: '
             pattern = gets.chomp
           end
-          where(pattern)
+          hash_output = where(pattern)
+          if !hash_output.empty?
+            puts "\nСтроки, содержащие введённый паттерн:"
+            hash_output.each_key { |key| puts "#{key}: #{hash_output[key]}" }
+          else
+            puts "\nСтрок с введённым паттерном нет."
+          end
         when 4
           print 'Введите номер искомой строки. Текст приравнивается к 0: '
           id = gets.chomp.to_i
@@ -50,7 +65,8 @@ def interface
           end
           print 'Введите новый текст для искомой строки: '
           text = gets
-          update(id, text)
+          result = update(id, text)
+          puts(result ? "Обновление строки #{id} произошло успешно." : 'Строки с таким номером не существует.')
         when 5
           print 'Введите номер искомой строки. Текст приравнивается к 0: '
           id = gets.chomp.to_i
@@ -59,7 +75,8 @@ def interface
             print 'Введите номер искомой строки. Текст приравнивается к 0: '
             id = gets.chomp.to_i
           end
-          delete(id)
+          result = delete(id)
+          puts(result ? "Удаление строки #{id} произошло успешно." : 'Строки с таким номером не существует.')
         end
       else
         puts 'Файл пуст или не существует. Пожалуйста, исправьте проблему для дальнешей работы программы, либо запустите команду: create'
@@ -77,4 +94,4 @@ def interface
   end
 end
 
-# interface
+interface

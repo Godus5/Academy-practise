@@ -23,17 +23,6 @@ def set_search_age
   age
 end
 
-def result
-  if File.zero?(RESULT)
-    puts 'Результирующий файл пустой.'
-  else
-    puts 'Результат:'
-    File.foreach(RESULT) do |line|
-      puts line.chomp
-    end
-  end
-end
-
 def search_by_list(students_list, search_age)
   index = 0
   while index < students_list.size
@@ -47,6 +36,14 @@ def search_by_list(students_list, search_age)
   students_list
 end
 
+def result
+  result_data = []
+  File.foreach(RESULT) do |line|
+    result_data << line.chomp
+  end
+  result_data
+end
+
 def main
   students_list = read_file
   search_age = 0
@@ -56,7 +53,13 @@ def main
     students_list = search_by_list(students_list, search_age)
     puts(students_list.empty? || search_age.to_i == -1 ? 'Завершение процесса поиска.' : 'Поиск завершен. Следующая итерация.')
   end
-  result
+  result_data = result
+  if result_data.empty?
+    puts 'Результирующий файл пустой.'
+  else
+    puts 'Результат:'
+    result_data.each { |line| puts line }
+  end
 end
 
 # main
