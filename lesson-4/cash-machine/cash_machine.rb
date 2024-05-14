@@ -46,7 +46,7 @@ class CashMachine
     puts "\nСредства сняты.\nТекущий баланс: #{@current_balance}"
   end
 
-  def main
+  def init
     flag = true
     while flag
       puts "\nВыберите функцию банкомата путём ввода первой буквы."
@@ -72,4 +72,4 @@ class CashMachine
   end
 end
 
-# CashMachine.new.main
+# CashMachine.new.init
