@@ -7,16 +7,10 @@ def greeting
   last_name = gets.chomp
   print 'Введите ваш возраст: '
   age = gets.chomp.to_i
-  loop do
-    flag = false
-    if age <= 0
-      puts 'Некорректный ввод возраста. Пожалуйста, введите значение больше 0.'
-      print 'Введите ваш возраст: '
-      age = gets.chomp.to_i
-    else
-      flag = true
-    end
-    break if flag
+  while age <= 0
+    puts 'Некорректный ввод возраста. Пожалуйста, введите значение больше 0.'
+    print 'Введите ваш возраст: '
+    age = gets.chomp.to_i
   end
 
   if age < 18
