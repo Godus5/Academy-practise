@@ -21,7 +21,7 @@ class CashMachine
     else
       @current_balance += deposit_amount
       File.write(TASK_FILE, @current_balance)
-      "\nDeposit accepted.\nCurrent balance: #{@current_balance}"
+      "Deposit accepted.\nCurrent balance: #{@current_balance}"
     end
   end
 
@@ -31,7 +31,7 @@ class CashMachine
     else
       @current_balance -= withdraw_amount
       File.write(TASK_FILE, @current_balance)
-      "\nFunds have been withdrawn.\nCurrent balance: #{@current_balance}"
+      "Funds have been withdrawn.\nCurrent balance: #{@current_balance}"
     end
   end
 end

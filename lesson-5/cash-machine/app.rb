@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 require 'rack'
-require './cash_machine'
+require_relative './cash_machine'
 
 # The class describes the operation of the application in the application server
 class App
   def call(env)
     req = Rack::Request.new(env)
-
     params = req.query_string.split('&').map { |pair| pair.split('=') }.to_h
 
     router(req.path, params)
