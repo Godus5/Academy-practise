@@ -4,24 +4,20 @@ TASK_FILE = 'example.txt'
 BUFFER = 'buffer.txt'
 
 def index
-  data_file = []
-  File.foreach(TASK_FILE) do |line|
-    data_file << line.chomp
+  puts "\nСодержимое файла:\n"
+  File.foreach(TASK_FILE).with_index(1) do |line, idx|
+    puts "#{idx}: #{line}"
   end
-  data_file
 end
 
 def find(id)
-  result = false
-  find_line = ''
   File.foreach(TASK_FILE).with_index(1) do |line, index|
     if index == id
-      find_line = line
-      result = true
-      break
+      puts "\nСтрока с номером #{id}: #{result_find[0]}"
+      return
     end
   end
-  [find_line, result]
+  puts "\nСтроки с введённым номером не существует."
 end
 
 def where(pattern)
@@ -29,16 +25,21 @@ def where(pattern)
   File.foreach(TASK_FILE).with_index(1) do |line, index|
     hash_output[index] = line if line.chomp.include?(pattern)
   end
-  hash_output
+  if hash_output.empty?
+    puts "\nСтрок с введённым паттерном нет."
+  else
+    puts "\nСтроки, содержащие введённый паттерн:"
+    hash_output.each { |key, value| puts "#{key}: #{value}" }
+  end
 end
 
 def update(id, text)
-  result = false
   file = File.open(BUFFER, 'w')
   File.foreach(TASK_FILE).with_index(1) do |line, index|
+    file.puts(id == index ? text : line)
     if id == index
       file.puts(text)
-      result = true
+      puts("Обновление строки #{id} произошло успешно.")
     else
       file.puts(line)
     end
