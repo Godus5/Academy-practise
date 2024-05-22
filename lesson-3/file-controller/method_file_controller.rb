@@ -13,11 +13,11 @@ end
 def find(id)
   File.foreach(TASK_FILE).with_index(1) do |line, index|
     if index == id
-      puts "\nСтрока с номером #{id}: #{result_find[0]}"
+      puts "\nСтрока с номером #{id}: #{line}"
       return
     end
   end
-  puts "\nСтроки с введённым номером не существует."
+  puts "\nСтроки с таким номером не существует."
 end
 
 def where(pattern)
@@ -36,38 +36,37 @@ end
 def update(id, text)
   file = File.open(BUFFER, 'w')
   File.foreach(TASK_FILE).with_index(1) do |line, index|
-    file.puts(id == index ? text : line)
     if id == index
       file.puts(text)
-      puts("Обновление строки #{id} произошло успешно.")
+      text = nil
     else
       file.puts(line)
     end
   end
+  puts(text.nil? ? "\nОбновление строки #{id} произошло успешно." : "\nСтроки с таким номером не существует.")
   file.close
   File.write(TASK_FILE, File.read(BUFFER))
   File.delete(BUFFER) if File.exist?(BUFFER)
-  result
 end
 
 def delete(id)
-  result = false
   file = File.open(BUFFER, 'w')
   File.foreach(TASK_FILE).with_index(1) do |line, index|
-    if index != id
-      file.puts(line)
-    else
-      result = true
+    if index == id
+      id = nil
+      next
     end
+    file.puts(line)
   end
+  puts(id.nil? ? "\nУдаление строки произошло успешно." : "\nСтроки с таким номером не существует.")
   file.close
   File.write(TASK_FILE, File.read(BUFFER))
   File.delete(BUFFER) if File.exist?(BUFFER)
-  result
 end
 
 def create(name)
   File.open(TASK_FILE, 'a') do |file|
     file.puts(name)
   end
+  puts "\nСтрока успешно добавлена."
 end

@@ -3,43 +3,119 @@
 require_relative '../method_file_controller'
 require 'rspec'
 
-describe 'Testing the file controller with the correct data' do
-  let(:string) do
-    <<-STRING
-      123
-      321
-      456
-    STRING
-  end
-  let(:id) { 2 }
-  let(:pattern) { '21' }
-  let(:text) { '789' }
-  let(:name) { '789' }
+RSpec.describe 'Testing the file controller' do
+  let(:string) { "123\n321\n456" }
 
   before { File.write(TASK_FILE, string) }
 
-  it 'index' do
-    expect(index).to eq(string.split("\n"))
+  describe '#index' do
+    subject { index }
+    let(:out) { "\nСодержимое файла:\n1: 123\n2: 321\n3: 456\n" }
+
+    it 'Output file contents' do
+      expect { subject }.to output(out).to_stdout
+    end
   end
 
-  it 'find' do
-    expect(find(id)).to eq(["#{string.split("\n")[1]}\n", true])
+  describe '#find' do
+    subject { find(id) }
+
+    context 'Correct id entered' do
+      let(:out) { "\nСтрока с номером 2: 321\n" }
+      let(:id) { 2 }
+
+      it 'Output of the requested line' do
+        expect { subject }.to output(out).to_stdout
+      end
+    end
+
+    context 'Invalid id entered' do
+      let(:out) { "\nСтроки с таким номером не существует.\n" }
+      let(:id) { 5 }
+
+      it 'Output of the requested line' do
+        expect { subject }.to output(out).to_stdout
+      end
+    end
   end
 
-  it 'where' do
-    expect(where(pattern)).to eq({ 2 => "#{string.split("\n")[1]}\n" })
+  describe '#where' do
+    subject { where(pattern) }
+
+    context 'Entering the correct pattern' do
+      let(:out) { "\nСтроки, содержащие введённый паттерн:\n1: 123\n2: 321\n" }
+      let(:pattern) { '1' }
+
+      it 'Displays a list of strings with the entered pattern' do
+        expect { subject }.to output(out).to_stdout
+      end
+    end
+
+    context 'Entering an incorrect pattern' do
+      let(:out) { "\nСтрок с введённым паттерном нет.\n" }
+      let(:pattern) { 'a' }
+
+      it 'Displaying a message about the absence of lines with the entered pattern' do
+        expect { subject }.to output(out).to_stdout
+      end
+    end
   end
 
-  it 'update' do
-    expect(update(id, text)).to eq(true)
+  describe '#update' do
+    subject { update(id, text) }
+
+    context 'Correct id entered' do
+      let(:out) { "\nОбновление строки #{id} произошло успешно.\n" }
+      let(:id) { 2 }
+      let(:text) { 456 }
+
+      it 'Displays a list of strings with the entered pattern' do
+        expect { subject }.to output(out).to_stdout
+      end
+    end
+
+    context 'Invalid id entered' do
+      let(:out) { "\nСтроки с таким номером не существует.\n" }
+      let(:id) { 5 }
+      let(:text) { 456 }
+
+      it 'Displaying a message about the non-existence of a line with id number' do
+        expect { subject }.to output(out).to_stdout
+      end
+    end
   end
 
-  it 'delete' do
-    expect(delete(id)).to eq(true)
+  describe '#delete' do
+    subject { delete(id) }
+
+    context 'Correct id entered' do
+      let(:out) { "\nУдаление строки произошло успешно.\n" }
+      let(:id) { 2 }
+
+      it 'Displaying a message about the successful deletion of a row with id number' do
+        expect { subject }.to output(out).to_stdout
+      end
+    end
+
+    context 'Invalid id entered' do
+      let(:out) { "\nСтроки с таким номером не существует.\n" }
+      let(:id) { 5 }
+
+      it 'Displaying a message about the non-existence of a line with id number' do
+        expect { subject }.to output(out).to_stdout
+      end
+    end
   end
 
-  it 'create' do
-    create(name)
-    expect(index).to eq(string.split("\n") + ['789'])
+  describe '#create' do
+    subject { create(name) }
+    context 'Entering a new line' do
+      let(:out) { "\nСтрока успешно добавлена.\n" }
+      let(:name) { '789' }
+
+      it 'Displaying a message about the successful creation of a row' do
+        expect { subject }.to output(out).to_stdout
+      end
+    end
   end
 end
