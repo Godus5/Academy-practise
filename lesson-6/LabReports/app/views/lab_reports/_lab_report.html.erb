@@ -1,0 +1,22 @@
+<div id="<%= dom_id lab_report %>">
+  <p>
+    <strong>Title:</strong>
+    <%= lab_report.title %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= lab_report.description %>
+  </p>
+
+  <p>
+    <strong>Grade:</strong>
+    <%= lab_report.grade %>
+  </p>
+
+  <p>
+    <strong>User:</strong>
+    <%= User.find(lab_report.user_id).attributes.values_at('last_name', 'first_name').join(' ') %>
+  </p>
+
+</div>
