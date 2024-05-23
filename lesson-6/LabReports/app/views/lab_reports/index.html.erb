@@ -4,11 +4,27 @@
 
 <%= link_to "New lab report", new_lab_report_path %>
 
-<div id="lab_reports">
-  <% @lab_reports.each do |lab_report| %>
-    <%= render lab_report %>
-    <p>
-      <%= link_to "Show this lab report", lab_report %>
-    </p>
-  <% end %>
-</div>
+<table id="lab_reports">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Grade</th>
+      <th>User</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lab_reports.each do |lab_report| %>
+      <tr>
+        <td><%= lab_report.title %></td>
+        <td><%= lab_report.description %></td>
+        <td><%= lab_report.grade %></td>
+        <td><%= User.find(lab_report.user_id).attributes.values_at('last_name', 'first_name').join(' ') %></td>
+        <td><%= link_to "Show this lab report", lab_report %> </td>
+      </tr>      
+      <% end %>
+  </tbody>
+
+  
+</table> 

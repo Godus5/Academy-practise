@@ -22,13 +22,13 @@
   </div>
 
   <div>
-    <%= form.label :grade, style: "display: block" %>
-    <%= form.text_field :grade %>
+    <%= form.label :grade, style: "display: block" %>    
+    <%= form.select :grade, ['A', 'B', 'C', 'D', 'E', 'FX', 'F', 'None'], selected: "None" %>
   </div>
 
   <div>
     <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+    <%= form.collection_select :user_id, User.order(:id), :id, :first_ name %>
   </div>
 
   <div>

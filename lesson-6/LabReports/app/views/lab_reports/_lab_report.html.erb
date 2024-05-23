@@ -16,7 +16,7 @@
 
   <p>
     <strong>User:</strong>
-    <%= lab_report.user_id %>
+    <%= User.find(lab_report.user_id).attributes.values_at('last_name', 'first_name').join(' ') %>
   </p>
 
 </div>
