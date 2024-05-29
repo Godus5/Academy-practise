@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @lab_report %>
+
+<div>
+  <%= link_to "Edit this lab report", edit_lab_report_path(@lab_report) %> |
+  <%= link_to "Back to lab reports", lab_reports_path %>
+
+  <%= button_to "Destroy this lab report", @lab_report, method: :delete %>
+</div>
