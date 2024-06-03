@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'Validations' do
-    let!(:user) { User.create(email: 'example@example.com', first_name: 'first name', last_name: 'last name') }
+    let!(:user) { create(:user) }
     subject { LabReport.new(title:, description:, grade:).valid? }
 
     context 'Creating a new record with valid attributes' do
