@@ -3,8 +3,8 @@
 class User < ApplicationRecord
   has_many :lab_reports
 
-  validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ },
-                    length: { maximum: 150 }
-  validates :first_name, presence: true, length: { maximum: 100 }
-  validates :last_name, presence: true, length: { maximum: 100 }
+  validates :email, presence: true, uniqueness: true, format: {with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/},
+    length: {maximum: 150}
+  validates :first_name, presence: true, length: {maximum: 100}
+  validates :last_name, presence: true, length: {maximum: 100}
 end

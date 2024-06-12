@@ -9,7 +9,8 @@ class LabReportsController < ApplicationController
   end
 
   # GET /lab_reports/1 or /lab_reports/1.json
-  def show; end
+  def show
+  end
 
   # GET /lab_reports/new
   def new
@@ -17,7 +18,8 @@ class LabReportsController < ApplicationController
   end
 
   # GET /lab_reports/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /lab_reports or /lab_reports.json
   def create
@@ -25,7 +27,7 @@ class LabReportsController < ApplicationController
 
     respond_to do |format|
       if @lab_report.save
-        format.html { redirect_to lab_report_url(@lab_report), notice: 'Lab report was successfully created.' }
+        format.html { redirect_to lab_report_url(@lab_report), notice: "Lab report was successfully created." }
         format.json { render :show, status: :created, location: @lab_report }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,7 @@ class LabReportsController < ApplicationController
   def update
     respond_to do |format|
       if @lab_report.update(lab_report_params)
-        format.html { redirect_to lab_report_url(@lab_report), notice: 'Lab report was successfully updated.' }
+        format.html { redirect_to lab_report_url(@lab_report), notice: "Lab report was successfully updated." }
         format.json { render :show, status: :ok, location: @lab_report }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +54,7 @@ class LabReportsController < ApplicationController
     @lab_report.destroy!
 
     respond_to do |format|
-      format.html { redirect_to lab_reports_url, notice: 'Lab report was successfully destroyed.' }
+      format.html { redirect_to lab_reports_url, notice: "Lab report was successfully destroyed." }
       format.json { head :no_content }
     end
   end
