@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root "lab_reports#index"
+  devise_for :accounts
+  root to: "home#index"
   resources :lab_reports
   resources :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

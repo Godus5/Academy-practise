@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   has_many :lab_reports
+  belongs_to :account
 
   validates :email, presence: true, uniqueness: true, format: {with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/},
     length: {maximum: 150}
