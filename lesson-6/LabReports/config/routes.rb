@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   root "lab_reports#index"
 
-  devise_for :accounts
+  devise_for :accounts, controllers: { registrations: 'registrations' }
   resources :lab_reports
   resources :users
 
