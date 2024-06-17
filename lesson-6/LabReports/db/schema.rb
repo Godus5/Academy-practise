@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_091439) do
   end
 
   create_table "lab_reports", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.text "description"
     t.string "grade", default: "None"
     t.integer "user_id", null: false
