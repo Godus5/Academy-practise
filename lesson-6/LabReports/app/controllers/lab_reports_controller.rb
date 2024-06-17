@@ -68,6 +68,6 @@ class LabReportsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def lab_report_params
-    params.require(:lab_report).permit(:title, :description, :grade).merge(user_id: User.where(email: current_account.email).first.id)
+    params.require(:lab_report).permit(:title, :description, :grade).merge(user_id: User.find_by(email: current_account.email)&.id)
   end
 end

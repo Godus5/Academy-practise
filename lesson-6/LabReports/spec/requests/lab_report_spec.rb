@@ -3,7 +3,14 @@
 require "rails_helper"
 
 RSpec.describe "LabReports", type: :request do
+  let!(:account) { create(:account) }
+
+  before do
+    sign_in(account)
+  end
+
   describe "GET index" do
+    let!(:user) { create(:user, account: account) }
     subject { get lab_reports_path }
     context "Request a view of all lab reports" do
       it "Render the index page" do
@@ -14,8 +21,8 @@ RSpec.describe "LabReports", type: :request do
 
   describe "GET show" do
     subject { get lab_report_path(lab_report.id) }
-    let!(:user) { create(:user) }
-    let!(:lab_report) { create(:lab_report) }
+    let!(:user) { create(:user, account: account) }
+    let!(:lab_report) { create(:lab_report, user: user) }
 
     context "Request for retraction of a specific laboratory report" do
       it "Render the show page" do
@@ -35,13 +42,13 @@ RSpec.describe "LabReports", type: :request do
   end
 
   describe "POST create" do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, account: account) }
 
     context "Creating a record with valid values" do
       let(:valid_params) do
         {lab_report: {title: "Rails application", description: "Laboratory reports", grade: "None"}}
       end
-      subject { post lab_reports_path, params: valid_params }
+      subject { post lab_reports_path, params: valid_params}
 
       it "The number of records will increase by 1 and redirect to the generated laboratory report page" do
         expect { subject }.to change(LabReport, :count).by(1)
@@ -63,8 +70,8 @@ RSpec.describe "LabReports", type: :request do
   end
 
   describe "PATCH update" do
-    let!(:user) { create(:user) }
-    let!(:lab_report) { create(:lab_report) }
+    let!(:user) { create(:user, account: account) }
+    let!(:lab_report) { create(:lab_report, user: user) }
 
     context "Update a record with valid data entered" do
       let(:valid_params) do
@@ -91,8 +98,8 @@ RSpec.describe "LabReports", type: :request do
 
   describe "DELETE destroy" do
     subject { delete lab_report_path(lab_report) }
-    let!(:user) { create(:user) }
-    let!(:lab_report) { create(:lab_report) }
+    let!(:user) { create(:user, account: account) }
+    let!(:lab_report) { create(:lab_report, user: user) }
     context "A destroy request has been made for the lab report viewing." do
       it "The number of records decreases and the page index is rendered" do
         expect { subject }.to change(LabReport, :count).by(-1)

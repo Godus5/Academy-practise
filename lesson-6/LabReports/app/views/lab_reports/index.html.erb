@@ -1,5 +1,6 @@
 <p>
-  Welcome, <%="#{User.where(email: current_account.email).first.first_name} #{User.where(email: current_account.email).first.last_name}"%>
+  <%= "Welcome, #{User.find_by(email: current_account.email)&.first_name} #{User.find_by(email: current_account.email)&.last_name}" %>
+
 </p>    
 <%= button_to 'Sign Out', destroy_account_session_path, method: :delete %>
 <h1>Lab reports</h1>

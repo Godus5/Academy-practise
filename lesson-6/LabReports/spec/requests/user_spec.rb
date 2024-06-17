@@ -3,6 +3,12 @@
 require "rails_helper"
 
 RSpec.describe "Users", type: :request do
+  let!(:account) { create(:account) }
+
+  before do
+    sign_in account
+  end
+
   describe "GET index" do
     subject { get users_path }
     context "Request to view all users" do
@@ -14,7 +20,7 @@ RSpec.describe "Users", type: :request do
 
   describe "GET show" do
     subject { get user_path(user.id) }
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, account: account) }
 
     context "Request for withdrawal of a specific user" do
       it "Render the show page" do
@@ -40,14 +46,14 @@ RSpec.describe "Users", type: :request do
       end
       subject { post users_path, params: valid_params }
 
-      it "The number of records will increase by 1 and redirects to the page of the created user" do
+      it "The number of entries will increase by 1 and redirect to the lab report index page" do
         expect { subject }.to change(User, :count).by(1)
-        expect(subject).to redirect_to(user_url(id: 1))
+        expect(subject).to redirect_to(lab_reports_path)
       end
     end
 
     context "Creating a record with invalid values" do
-      let(:invalid_params) { {user: {email: "example@example", first_name: "first name", last_name: "last name"}} }
+      let(:invalid_params) { {user: {first_name: "", last_name: "last name"}} }
       subject { post users_path, params: invalid_params }
 
       it "The number of records will not increase and redirects to a page with a form for a new user" do
@@ -58,11 +64,11 @@ RSpec.describe "Users", type: :request do
   end
 
   describe "PATCH update" do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, account: account) }
 
     context "Updating a record with valid data entered" do
       let(:valid_params) do
-        {user: {email: "elpmaxe@example.com"}}
+        {user: {first_name: "Anton"}}
       end
       subject { patch user_path(user), params: valid_params }
 
@@ -73,7 +79,7 @@ RSpec.describe "Users", type: :request do
 
     context "Updating a record with invalid data entered" do
       let(:invalid_params) do
-        {user: {email: "elpmaxe@example"}}
+        {user: {first_name: ""}}
       end
       subject { patch user_path(user), params: invalid_params }
 
@@ -85,7 +91,7 @@ RSpec.describe "Users", type: :request do
 
   describe "DELETE destroy" do
     subject { delete user_path(user) }
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, account: account) }
 
     context "A destroy request is made for the user being viewed" do
       it "The number of records decreases and the page index is rendered" do
