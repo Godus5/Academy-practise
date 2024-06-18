@@ -4,5 +4,5 @@ class Account < ApplicationRecord
   has_one :user, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+    :recoverable, :rememberable, :validatable
 end

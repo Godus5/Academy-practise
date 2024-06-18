@@ -5,12 +5,9 @@ require "rails_helper"
 RSpec.describe User, type: :model do
   let!(:account) { create(:account) }
 
-  before do
-    sign_in(account)
-  end
   describe "Validations" do
-    let!(:user) { create(:user) }
-    subject { LabReport.new(title:, description:, grade:).valid? }
+    let!(:user) { create(:user, account: account) }
+    subject { LabReport.new(title:, description:, grade:, user_id: user.id).valid? }
 
     context "Creating a new record with valid attributes" do
       let(:title) { "Rails application" }

@@ -48,7 +48,7 @@ RSpec.describe "LabReports", type: :request do
       let(:valid_params) do
         {lab_report: {title: "Rails application", description: "Laboratory reports", grade: "None"}}
       end
-      subject { post lab_reports_path, params: valid_params}
+      subject { post lab_reports_path, params: valid_params }
 
       it "The number of records will increase by 1 and redirect to the generated laboratory report page" do
         expect { subject }.to change(LabReport, :count).by(1)
