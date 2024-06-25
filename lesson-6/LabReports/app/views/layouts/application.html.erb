@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>LabReports</title>
+    <title>LabReports</title>    
     
     <link rel="stylesheet" href="https://unpkg.com/simpledotcss/simple.min.css">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -9,10 +9,12 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
   </head>
 
   <body>
+    <p style="color: green"><%= notice %></p>
+    <p style="color: red"><%= alert %></p>
     <%= yield %>
   </body>
 </html>

@@ -1,27 +1,26 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe User, type: :model do
-  describe 'Validations' do
-    subject { User.new(email:, first_name:, last_name:).valid? }
+  let!(:account) { create(:account) }
 
-    context 'Creating a new record with valid attributes' do
-      let(:email) { 'example@example.com' }
-      let(:first_name) { 'first_name' }
-      let(:last_name) { 'last_name' }
+  describe "Validations" do
+    subject { User.new(email: account.email, first_name:, last_name:, account_id: account.id).valid? }
 
-      it 'The check runs without errors' do
+    context "Creating a new record with valid attributes" do
+      let(:first_name) { "first_name" }
+      let(:last_name) { "last_name" }
+      it "The check runs without errors" do
         expect(subject).to eq(true)
       end
     end
 
-    context 'Creating a new record with invalid attributes' do
-      let(:email) { 'example@example' }
-      let(:first_name) { 'first_name' }
-      let(:last_name) { 'last_name' }
+    context "Creating a new record with invalid attributes" do
+      let(:first_name) { "" }
+      let(:last_name) { "last_name" }
 
-      it 'The check runs without errors' do
+      it "The check runs without errors" do
         expect(subject).to eq(false)
       end
     end

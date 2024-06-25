@@ -1,6 +1,10 @@
-<p style="color: green"><%= notice %></p>
+<p>
+  <%= "Welcome, #{User.find_by(email: current_account.email)&.first_name} #{User.find_by(email: current_account.email)&.last_name}" %>
 
+</p>    
+<%= button_to 'Sign Out', destroy_account_session_path, method: :delete %>
 <h1>Lab reports</h1>
+
 
 <%= link_to "New lab report", new_lab_report_path %>
 
