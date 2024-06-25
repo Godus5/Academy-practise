@@ -50,7 +50,7 @@ RSpec.describe "LabReports", type: :request do
       end
       subject { post lab_reports_path, params: valid_params }
 
-      it "The number of records will increase by 1 and redirect to the generated laboratory report page" do
+      it "The number of records will increase by 1 and redirect to the generated laboratory report page", :aggregate_failures do
         expect { subject }.to change(LabReport, :count).by(1)
         expect(subject).to redirect_to(lab_report_url(id: 1))
       end
@@ -62,7 +62,7 @@ RSpec.describe "LabReports", type: :request do
       end
       subject { post lab_reports_path, params: invalid_params }
 
-      it "The number of records will not increase and will redirect to a page with a new laboratory report form" do
+      it "The number of records will not increase and will redirect to a page with a new laboratory report form", :aggregate_failures do
         expect { subject }.not_to change(LabReport, :count)
         expect(subject).to render_template(:new)
       end
@@ -101,7 +101,7 @@ RSpec.describe "LabReports", type: :request do
     let!(:user) { create(:user, account: account) }
     let!(:lab_report) { create(:lab_report, user: user) }
     context "A destroy request has been made for the lab report viewing." do
-      it "The number of records decreases and the page index is rendered" do
+      it "The number of records decreases and the page index is rendered", :aggregate_failures do
         expect { subject }.to change(LabReport, :count).by(-1)
         expect(subject).to redirect_to(lab_reports_path)
       end

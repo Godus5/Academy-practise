@@ -46,7 +46,7 @@ RSpec.describe "Users", type: :request do
       end
       subject { post users_path, params: valid_params }
 
-      it "The number of entries will increase by 1 and redirect to the lab report index page" do
+      it "The number of entries will increase by 1 and redirect to the lab report index page", :aggregate_failures do
         expect { subject }.to change(User, :count).by(1)
         expect(subject).to redirect_to(lab_reports_path)
       end
@@ -56,7 +56,7 @@ RSpec.describe "Users", type: :request do
       let(:invalid_params) { {user: {first_name: "", last_name: "last name"}} }
       subject { post users_path, params: invalid_params }
 
-      it "The number of records will not increase and redirects to a page with a form for a new user" do
+      it "The number of records will not increase and redirects to a page with a form for a new user", :aggregate_failures do
         expect { subject }.to_not change(User, :count)
         expect(subject).to render_template(:new)
       end
@@ -94,7 +94,7 @@ RSpec.describe "Users", type: :request do
     let!(:user) { create(:user, account: account) }
 
     context "A destroy request is made for the user being viewed" do
-      it "The number of records decreases and the page index is rendered" do
+      it "The number of records decreases and the page index is rendered", :aggregate_failures do
         expect { subject }.to change(User, :count).by(-1)
         expect(subject).to redirect_to(users_path)
       end
